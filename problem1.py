@@ -1,0 +1,52 @@
+# problem 1 
+
+# https://leetcode.com/problems/flatten-nested-list-iterator/description/
+
+# """
+# This is the interface that allows for creating nested lists.
+# You should not implement it, or speculate about its implementation
+# """
+#class NestedInteger:
+#    def isInteger(self) -> bool:
+#        """
+#        @return True if this NestedInteger holds a single integer, rather than a nested list.
+#        """
+#
+#    def getInteger(self) -> int:
+#        """
+#        @return the single integer that this NestedInteger holds, if it holds a single integer
+#        Return None if this NestedInteger holds a nested list
+#        """
+#
+#    def getList(self) -> [NestedInteger]:
+#        """
+#        @return the nested list that this NestedInteger holds, if it holds a nested list
+#        Return None if this NestedInteger holds a single integer
+#        """
+
+class NestedIterator:
+    def __init__(self, nestedList: [NestedInteger]):
+        self.result_arr = []
+        self.idx = 0 
+        self.helper(nestedList)
+
+    def helper(self,nestedList):
+        for n_list in nestedList:
+            if n_list.isInteger():
+                self.result_arr.append(n_list.getInteger())
+            else:
+                self.helper(n_list.getList())
+    
+    def next(self) -> int:
+        val = self.result_arr[self.idx]
+        self.idx+=1
+        return val
+    
+    def hasNext(self) -> bool:
+        if self.idx < len(self.result_arr):
+            return True 
+        return False
+
+# Your NestedIterator object will be instantiated and called as such:
+# i, v = NestedIterator(nestedList), []
+# while i.hasNext(): v.append(i.next())
